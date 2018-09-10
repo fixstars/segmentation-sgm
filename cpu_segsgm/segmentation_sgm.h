@@ -3,6 +3,9 @@
 
 #include <opencv2/opencv.hpp>
 
+namespace cpu
+{
+
 class SegmentationSGM
 {
 public:
@@ -81,5 +84,7 @@ private:
 
 	Parameters param_;
 };
+
+} // namespace cpu
 
 #endif // !__SEGMENTATION_SGM_H__

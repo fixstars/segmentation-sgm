@@ -24,7 +24,7 @@ static std::string format_string(const char* fmt, Args... args)
 	return std::string(buf);
 }
 
-static void draw_segments(cv::Mat& img, const std::vector<SegmentationSGM::Segment>& segments)
+static void draw_segments(cv::Mat& img, const std::vector<cpu::SegmentationSGM::Segment>& segments)
 {
 	CV_Assert(img.type() == CV_8UC3);
 	img = 0;
@@ -82,17 +82,17 @@ int main(int argc, char* argv[])
 	const cv::FileStorage cvfs(argv[3], cv::FileStorage::READ);
 	CV_Assert(cvfs.isOpened());
 	const cv::FileNode node(cvfs.fs, NULL);
-
+	
 	// input parameters
-	SegmentationSGM::Parameters param;
+	cpu::SegmentationSGM::Parameters param;
 	param.camera.fu = node["FocalLengthX"];
 	param.camera.fv = node["FocalLengthY"];
 	param.camera.u0 = node["CenterX"];
 	param.camera.v0 = node["CenterY"];
 	param.camera.baseline = node["BaseLine"];
 	param.maxDisparity = disp_size;
-	SegmentationSGM segsgm(param);
-	std::vector<SegmentationSGM::Segment> segments;
+	cpu::SegmentationSGM segsgm(param);
+	std::vector<cpu::SegmentationSGM::Segment> segments;
 
 	for (int frame_no = first_frame;; frame_no++)
 	{

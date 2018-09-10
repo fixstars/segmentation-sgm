@@ -11,6 +11,9 @@
 #define OMP_PARALLEL_FOR
 #endif
 
+namespace cpu
+{
+
 static const int P_OO1 = 10;        // object <=> object transition cost
 static const int P_OO2 = 2 * P_OO1; // object <=> object transition cost when violate object ordering
 static const int P_OG1 = 5;         // object <=> ground transition cost
@@ -508,7 +511,9 @@ void SegmentationSGM::compute(const cv::Mat& disparity, std::vector<Segmentation
 {
 	CV_Assert(disparity.type() == CV_8U || disparity.type() == CV_16U);
 	if (disparity.type() == CV_8U)
-		::compute(cv::Mat_<uchar>(disparity), segments, param_);
+		cpu::compute(cv::Mat_<uchar>(disparity), segments, param_);
 	else if (disparity.type() == CV_16U)
-		::compute(cv::Mat_<ushort>(disparity), segments, param_);
+		cpu::compute(cv::Mat_<ushort>(disparity), segments, param_);
 }
+
+} // namespace cpu
