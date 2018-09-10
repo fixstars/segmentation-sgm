@@ -173,7 +173,7 @@ void scanOneColumn(int uc, const cv::Mat_<disp_type>& D, const std::vector<float
 	cv::Mat1w& labels, int dmax, const CameraParameters& camera)
 {
 	const int vmax = D.cols;
-	const int umax = D.rows;
+	//const int umax = D.rows;
 	const int n = dmax + 1;
 	enum { FORE = 0, BACK = 1 };
 
@@ -322,13 +322,6 @@ void extractSegments(const cv::Mat1w& labels, int dmax, const CameraParameters& 
 	const int MIN_HEIGHT = 10;
 	auto isObject = [=](int d) { return d > 0 && d < dmax; };
 	CoordinateTransform tf(camera);
-
-	auto calcH = [&](const Segment& segment)
-	{
-		const float YT = tf.toY(static_cast<float>(segment.d), segment.vT);
-		const float YB = tf.toY(static_cast<float>(segment.d), segment.vB);
-		return fabs(YB - YT);
-	};
 
 	std::vector<Segment> tmpSegments1, tmpSegments2;
 	tmpSegments1.reserve(vmax);

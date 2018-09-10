@@ -41,7 +41,7 @@ static void draw_segments(cv::Mat& img, const std::vector<SegmentationSGM::Segme
 		img(region) = color;
 	}
 
-	cv::cvtColor(img, img, CV_HSV2BGR);
+	cv::cvtColor(img, img, cv::COLOR_HSV2BGR);
 
 	const cv::Scalar borderColor(255, 255, 255);
 	for (const auto& segment : segments)
@@ -79,7 +79,7 @@ int main(int argc, char* argv[])
 	cv::Mat disparity;
 
 	// read camera parameters
-	const cv::FileStorage cvfs(argv[3], CV_STORAGE_READ);
+	const cv::FileStorage cvfs(argv[3], cv::FileStorage::READ);
 	CV_Assert(cvfs.isOpened());
 	const cv::FileNode node(cvfs.fs, NULL);
 
