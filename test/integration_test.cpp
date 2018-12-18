@@ -17,7 +17,6 @@ TEST(IntegrationTest, FromFile)
 	CV_Assert(!disparity.empty());
 	CV_Assert(!ifs.fail());
 
-	const int umax = disparity.rows;
 	const int vmax = disparity.cols;
 	const int dmax = 128;
 

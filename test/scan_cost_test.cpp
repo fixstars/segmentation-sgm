@@ -58,7 +58,6 @@ TEST(ScanCostTest, FromFile)
 	CV_Assert(!D.empty());
 	CV_Assert(!ifs.fail());
 
-	const int umax = D.rows;
 	const int vmax = D.cols;
 	const int dmax = 128;
 
