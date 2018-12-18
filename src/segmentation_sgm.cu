@@ -10,13 +10,13 @@
 #include "macro.h"
 
 #if CUDA_VERSION >= 9000
-#define SHFL_UP(var, delta, width) __shfl_up_sync(0xffffffff, (var), (delta))
-#define SHFL_DOWN(var, delta, width) __shfl_down_sync(0xffffffff, (var), (delta))
-#define SHFL(var, srcLane, width) __shfl_sync(0xffffffff, (var), (srcLane))
+#define SHFL_UP(var, delta) __shfl_up_sync(0xffffffff, (var), (delta))
+#define SHFL_DOWN(var, delta) __shfl_down_sync(0xffffffff, (var), (delta))
+#define SHFL(var, srcLane) __shfl_sync(0xffffffff, (var), (srcLane))
 #else
-#define SHFL_UP(var, delta, width) __shfl_up((var), (delta))
-#define SHFL_DOWN(var, delta, width) __shfl_down((var), (delta))
-#define SHFL(var, srcLane, width) __shfl((var), (srcLane))
+#define SHFL_UP(var, delta) __shfl_up((var), (delta))
+#define SHFL_DOWN(var, delta) __shfl_down((var), (delta))
+#define SHFL(var, srcLane) __shfl((var), (srcLane))
 #endif
 
 namespace sgm
