@@ -14,7 +14,7 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 
 # CUDA
 find_package(CUDA REQUIRED)
-set(CUDA_NVCC_FLAGS "${CUDA_NVCC_FLAGS}; -arch=sm_61 -lineinfo")
+set(CUDA_NVCC_FLAGS "${CUDA_NVCC_FLAGS} ${CUDA_ARCH} -lineinfo")
 
 # OpenPM
 find_package(OpenMP)
