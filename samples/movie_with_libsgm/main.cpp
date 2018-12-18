@@ -61,7 +61,7 @@ int main(int argc, char* argv[])
 		std::exit(EXIT_FAILURE);
 	}
 
-	const int disp_size = argc >= 5 ? std::stoi(argv[3]) : 128;
+	const int disp_size = argc > 4 ? std::stoi(argv[4]) : 128;
 	const int first_frame = 1;
 
 	cv::Mat I1 = cv::imread(cv::format(argv[1], first_frame), cv::IMREAD_UNCHANGED);
