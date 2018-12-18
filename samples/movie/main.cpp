@@ -1,10 +1,10 @@
 #include <iostream>
 #include <iomanip>
+#include <fstream>
 #include <string>
 #include <chrono>
 
 #include <opencv2/core/core.hpp>
-#include <opencv2/core/utils/filesystem.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
@@ -15,6 +15,12 @@
 		std::cerr << msg << std::endl; \
 		std::exit(EXIT_FAILURE); \
 	} \
+
+static bool exists(const std::string& path)
+{
+	std::ifstream ifs(path);
+	return !ifs.fail();
+}
 
 static void draw_segmentation(cv::Mat& img, const std::vector<sgm::SegmentationSGM::Segment>& segments)
 {
@@ -71,7 +77,7 @@ int main(int argc, char* argv[])
 
 	// read camera parameters
 	const std::string cameraFile(argv[3]);
-	if (!cv::utils::fs::exists(cameraFile))
+	if (!exists(cameraFile))
 	{
 		std::cerr << "File " << cameraFile << " not found." << std::endl;
 		std::exit(EXIT_FAILURE);
