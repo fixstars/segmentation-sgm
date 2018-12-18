@@ -1,6 +1,11 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.1)
 
-project(segmentation_sgm)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
-add_subdirectory(cpu_segsgm)
+project(SegmentationSGM)
+
+add_subdirectory(src)
 add_subdirectory(samples/movie)
+add_subdirectory(samples/movie_with_libsgm)
+add_subdirectory(test)
