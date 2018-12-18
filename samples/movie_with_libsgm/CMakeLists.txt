@@ -9,7 +9,7 @@ endif()
 include_directories(../../include)
 
 # libSGM
-find_package(libSGM REQUIRED)
+find_package(LibSGM REQUIRED)
 include_directories(${LIBSGM_INCLUDE_DIRS})
 
 # OpenCV
