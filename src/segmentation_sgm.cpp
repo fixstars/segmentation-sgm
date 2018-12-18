@@ -178,11 +178,11 @@ public:
 	struct CostSize
 	{
 		int umax, vmax, nlabels;
-		CostSize(int vmax = 0, int umax = 0, int nlabels = 0) : vmax(vmax), umax(umax), nlabels(nlabels) {}
+		CostSize(int umax = 0, int vmax = 0, int nlabels = 0) : umax(umax), vmax(vmax), nlabels(nlabels) {}
 		bool operator==(const CostSize& rhs) const
 		{
 			const CostSize& lhs(*this);
-			return lhs.vmax == rhs.vmax && lhs.umax == rhs.umax && lhs.nlabels == rhs.nlabels;
+			return lhs.umax == rhs.umax && lhs.vmax == rhs.vmax && lhs.nlabels == rhs.nlabels;
 		}
 		bool operator!=(const CostSize& rhs) const
 		{
