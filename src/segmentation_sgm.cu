@@ -261,7 +261,6 @@ __global__ void scanCostBackKernel(const T* __restrict__ disparity, int umax, in
 			// matching cost
 			const int dhat = object ? k : droad;
 			const int diff = object ? abs(d - dhat) : lroundf(max(d - dhat, 0) / sigmad);
-
 			const int MC = min(diff, MC_MAX_DIFF);
 
 			// transition cost
