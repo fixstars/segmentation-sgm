@@ -1,10 +1,7 @@
 #include <iostream>
-#include <iomanip>
-#include <string>
 #include <chrono>
 
 #include <opencv2/core/core.hpp>
-#include <opencv2/core/utils/filesystem.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
@@ -61,18 +58,20 @@ int main(int argc, char* argv[])
 		std::exit(EXIT_FAILURE);
 	}
 
-	const int disp_size = argc > 4 ? std::stoi(argv[4]) : 128;
 	const int first_frame = 1;
 
 	cv::Mat I1 = cv::imread(cv::format(argv[1], first_frame), cv::IMREAD_UNCHANGED);
 	cv::Mat I2 = cv::imread(cv::format(argv[2], first_frame), cv::IMREAD_UNCHANGED);
+	const cv::FileStorage fs(argv[3], cv::FileStorage::READ);
+	const int disp_size = argc > 4 ? std::stoi(argv[4]) : 128;
 
 	ASSERT_MSG(!I1.empty() && !I2.empty(), "imread failed.");
+	ASSERT_MSG(fs.isOpened(), "camera.xml read failed.");
 	ASSERT_MSG(I1.size() == I2.size() && I1.type() == I2.type(), "input images must be same size and type.");
 	ASSERT_MSG(I1.type() == CV_8U || I1.type() == CV_16U, "input image format must be CV_8U or CV_16U.");
 	ASSERT_MSG(disp_size == 64 || disp_size == 128, "disparity size must be 64 or 128.");
 
-	// stereo sgbm
+	// stereo sgm
 	const int width = I1.cols;
 	const int height = I1.rows;
 
@@ -83,15 +82,6 @@ int main(int argc, char* argv[])
 
 	sgm::StereoSGM sgm(width, height, disp_size, input_depth, output_depth, sgm::EXECUTE_INOUT_CUDA2CUDA);
 	cv::Mat disparity(height, width, CV_8U);
-
-	// read camera parameters
-	const std::string cameraFile(argv[3]);
-	if (!cv::utils::fs::exists(cameraFile))
-	{
-		std::cerr << "File " << cameraFile << " not found." << std::endl;
-		std::exit(EXIT_FAILURE);
-	}
-	const cv::FileStorage fs(cameraFile, cv::FileStorage::READ);
 
 	// input parameters
 	sgm::SegmentationSGM::Parameters param;

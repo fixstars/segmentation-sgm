@@ -4,7 +4,6 @@
 #include <chrono>
 
 #include <opencv2/core/core.hpp>
-#include <opencv2/core/utils/filesystem.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
@@ -61,16 +60,15 @@ int main(int argc, char* argv[])
 		std::exit(EXIT_FAILURE);
 	}
 
-	const int first_frame = 1;
-
-	cv::Mat I1 = cv::imread(argv[1], -1);
-	cv::Mat I2 = cv::imread(argv[2], -1);
+	cv::Mat I1 = cv::imread(argv[1], cv::IMREAD_UNCHANGED);
+	cv::Mat I2 = cv::imread(argv[2], cv::IMREAD_UNCHANGED);
 	const cv::FileStorage fs(argv[3], cv::FileStorage::READ);
 	const int disp_size = argc > 4 ? std::stoi(argv[4]) : 128;
 	const int segment_width = argc > 5 ? std::stoi(argv[5]) : 7;
 	const int iterations = argc > 6 ? std::stoi(argv[6]) : 100;
 
 	ASSERT_MSG(!I1.empty() && !I2.empty(), "imread failed.");
+	ASSERT_MSG(fs.isOpened(), "camera.xml read failed.");
 	ASSERT_MSG(I1.size() == I2.size() && I1.type() == I2.type(), "input images must be same size and type.");
 	ASSERT_MSG(I1.type() == CV_8U || I1.type() == CV_16U, "input image format must be CV_8U or CV_16U.");
 	ASSERT_MSG(disp_size == 64 || disp_size == 128, "disparity size must be 64 or 128.");
