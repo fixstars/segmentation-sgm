@@ -17,6 +17,7 @@ if(ENABLE_SAMPLES)
 	add_subdirectory(samples/movie)
 	if(WITH_LIBSGM)
 		add_subdirectory(samples/movie_with_libsgm)
+		add_subdirectory(samples/benchmark)
 	endif(WITH_LIBSGM)
 endif(ENABLE_SAMPLES)
 
