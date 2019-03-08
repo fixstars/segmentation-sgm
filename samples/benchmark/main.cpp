@@ -118,7 +118,7 @@ int main(int argc, char* argv[])
 
 	// run benchmark
 	std::cout << "Running benchmark..." << std::endl;
-	uint64_t sum[2] = { 0, 0 };
+	uint64_t sum[3] = { 0, 0, 0 };
 	for (int i = 0; i <= iterations; i++)
 	{
 		const auto t1 = std::chrono::system_clock::now();
@@ -130,6 +130,7 @@ int main(int argc, char* argv[])
 
 		segsgm.compute(reinterpret_cast<const uchar*>(d_disparity.data), width, height, width, segments,
 			sgm::SegmentationSGM::INPUT_PTR_DEVICE);
+		cudaDeviceSynchronize();
 
 		const auto t3 = std::chrono::system_clock::now();
 
@@ -137,13 +138,14 @@ int main(int argc, char* argv[])
 		{
 			sum[0] += std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
 			sum[1] += std::chrono::duration_cast<std::chrono::microseconds>(t3 - t2).count();
+			sum[2] += std::chrono::duration_cast<std::chrono::microseconds>(t3 - t1).count();
 		}
 	}
 	std::cout << "Done." << std::endl << std::endl;
 
 	// show results
-	const std::string names[2] = { "Stereo SGM", "Segmentation SGM" };
-	for (int i = 0; i < 2; i++)
+	const std::string names[3] = { "Stereo SGM", "Segmentation SGM", "Total" };
+	for (int i = 0; i < 3; i++)
 	{
 		const double time_millisec = 1e-3 * sum[i] / iterations;
 		const double fps = 1e3 / time_millisec;
