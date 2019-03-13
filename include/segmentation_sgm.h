@@ -1,7 +1,7 @@
 #ifndef __SEGMENTATION_SGM_H__
 #define __SEGMENTATION_SGM_H__
 
-#include <opencv2/opencv.hpp>
+#include <opencv2/core.hpp>
 
 namespace sgm
 {
