@@ -10,7 +10,7 @@ A CUDA implementation of Segmentation SGM
 From a given disparity map, it extracts segments that cover obstacles. It is implemented using C++ and CUDA.
 
 ## Algorithm
-- The detailed algorithm is [here]() (currently Japanese only).
+- The detailed algorithm is [here](https://github.com/fixstars/segmentation-sgm/wiki/Segmentation-SGM) (currently Japanese only).
 
 ## Requirement
 - CUDA
