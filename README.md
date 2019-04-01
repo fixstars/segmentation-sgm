@@ -6,7 +6,7 @@ A CUDA implementation of Segmentation SGM
 </div>
 
 ## Description
-**Segmentation SGM** is an implementation of segmentation algorithm that utilize Semi-Global Matching.  
+**Segmentation SGM** is an implementation of segmentation algorithm that utilizes Semi-Global Matching.  
 From a given disparity map, it extracts segments that cover obstacles. It is implemented using C++ and CUDA.
 
 ## Algorithm
