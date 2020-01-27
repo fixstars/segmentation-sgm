@@ -93,7 +93,10 @@ __global__ void horizontalMedianKernel(const T* __restrict__ disparity, int pitc
 		return;
 
 	for (int du = 0; du < segmentWidth; du++)
-		buf[du] = disparity[v * pitch + u * segmentWidth + du];
+	{
+		const T d = disparity[v * pitch + u * segmentWidth + du];
+		buf[du] = d < MAX_DISPARITY ? d : 0;
+	}
 
 	// get median
 	const T m = median(buf, segmentWidth);
