@@ -35,7 +35,10 @@ void horizontalMedian(const cv::Mat_<T>& src, cv::Mat_<T>& dst, int segmentWidth
 		{
 			// compute horizontal median
 			for (int du = 0; du < segmentWidth; du++)
-				buf[du] = src(v, u * segmentWidth + du);
+			{
+				const T d = src(v, u * segmentWidth + du);
+				buf[du] = d < sgm::MAX_DISPARITY ? d : 0;
+			}
 			const T m = median(buf);
 
 			// store with transposed
