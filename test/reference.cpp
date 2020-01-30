@@ -145,7 +145,7 @@ void scanOneColumn(int uc, const cv::Mat_<T>& D, int dmax, const std::vector<flo
 
 						// Object from Ground
 						if (forward)
-							cost3 = k > droad ? P_OG2 : P_INF;
+							cost3 = k > droad ? L(vp, dmax) + P_OG2 : P_INF;
 						else
 							cost3 = k == droad ? L(vp, dmax) + P_OG1 : P_INF;
 					}
