@@ -218,7 +218,7 @@ __global__ void scanCostForeKernel(const T* __restrict__ disparity, int umax, in
 					cost2 = minCostsOO[BACK][t] + P_OO2;
 
 					// Object from Ground
-					cost3 = k > droad ? P_OG2 : P_INF;
+					cost3 = k > droad ? Lp[dmax] + P_OG2 : P_INF;
 				}
 				else
 				{
