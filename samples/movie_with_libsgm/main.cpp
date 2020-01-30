@@ -26,6 +26,11 @@ limitations under the License.
 #include <libsgm.h>
 #include <segmentation_sgm.h>
 
+#define LIBSGM_VERSION_NUM (100 * LIBSGM_VERSION_MAJOR + 10 * LIBSGM_VERSION_MINOR + LIBSGM_VERSION_PATCH)
+#if LIBSGM_VERSION_NUM >= 260
+#define LIBSGM_HAS_INVALID_DISPARITY
+#endif
+
 #define ASSERT_MSG(expr, msg) \
 	if (!(expr)) { \
 		std::cerr << msg << std::endl; \
@@ -99,6 +104,12 @@ int main(int argc, char* argv[])
 	sgm::StereoSGM sgm(width, height, disp_size, input_depth, output_depth, sgm::EXECUTE_INOUT_CUDA2CUDA);
 	cv::Mat disparity(height, width, CV_8U);
 
+#ifdef LIBSGM_HAS_INVALID_DISPARITY
+	const int invalid_disparity = static_cast<uchar>(sgm.get_invalid_disparity());
+#else
+	const int invalid_disparity = 0;
+#endif
+
 	// input parameters
 	sgm::SegmentationSGM::Parameters param;
 	param.camera.fu = fs["FocalLengthX"];
@@ -147,7 +158,7 @@ int main(int argc, char* argv[])
 		cv::Mat disparity_color;
 		disparity.convertTo(disparity_color, CV_8U, 255. / disp_size);
 		cv::applyColorMap(disparity_color, disparity_color, cv::COLORMAP_JET);
-		disparity_color.setTo(cv::Scalar(0, 0, 0), disparity == 0);
+		disparity_color.setTo(cv::Scalar(0, 0, 0), disparity == invalid_disparity);
 
 		// put processing time
 		cv::putText(disparity_color, cv::format("sgm execution time : %4.1f [msec]", 1e-3 * duration12), cv::Point(100, 50), 2, 0.75, cv::Scalar(255, 255, 255));
